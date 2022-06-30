@@ -22,7 +22,7 @@ class MoneyBreakerLogic extends JFrame implements ActionListener {
     public static void main(String args[])
     {
         // frame
-        f = new JFrame("calculator");
+        f = new JFrame("Geld verkleinern");
  
         try {
             
@@ -36,13 +36,15 @@ class MoneyBreakerLogic extends JFrame implements ActionListener {
         MoneyBreakerLogic c = new MoneyBreakerLogic();
  
         // create a textfield
-        l = new JTextField(16);
+        l = new JTextField(12);
  
         // set the textfield to non editable
         l.setEditable(false);
  
         // create number buttons and some operators
-        JButton b0, b1, b2, b3, b4, b5, b6, b7, b8, b9, ba, bs, bd, bm, be, beq, beq1;
+        JButton b0, b1, b2, b3, b4, b5, b6, b7, b8, b9, be, beq, beq1;
+        final JTextField son=new JTextField();  
+        son.setBounds(50,50, 150,20);  
  
         
         b0 = new JButton("0");
@@ -59,24 +61,14 @@ class MoneyBreakerLogic extends JFrame implements ActionListener {
         
         beq1 = new JButton("=");
  
-        
-        ba = new JButton("+");
-        bs = new JButton("-");
-        bd = new JButton("/");
-        bm = new JButton("*");
         beq = new JButton("C");
  
-        
         be = new JButton(".");
- 
         
+ 
         JPanel p = new JPanel();
  
-        
-        bm.addActionListener(c);
-        bd.addActionListener(c);
-        bs.addActionListener(c);
-        ba.addActionListener(c);
+       
         b9.addActionListener(c);
         b8.addActionListener(c);
         b7.addActionListener(c);
@@ -93,31 +85,28 @@ class MoneyBreakerLogic extends JFrame implements ActionListener {
  
         
         p.add(l);
-        p.add(ba);
         p.add(b1);
         p.add(b2);
         p.add(b3);
-        p.add(bs);
         p.add(b4);
         p.add(b5);
         p.add(b6);
-        p.add(bm);
         p.add(b7);
         p.add(b8);
         p.add(b9);
-        p.add(bd);
         p.add(be);
         p.add(b0);
         p.add(beq);
         p.add(beq1);
+        p.add(son);
  
         
-        p.setBackground(Color.blue);
+        p.setBackground(Color.cyan);
  
        
         f.add(p);
  
-        f.setSize(200, 220);
+        f.setSize(400, 320);
         f.show();
     }
     public void actionPerformed(ActionEvent e)
@@ -144,22 +133,12 @@ class MoneyBreakerLogic extends JFrame implements ActionListener {
         }
         else if (s.charAt(0) == '=') {
  
-            double te;
+            int te;
  
             
-            if (s1.equals("+"))
-                te = (Double.parseDouble(s0) + Double.parseDouble(s2));
-            else if (s1.equals("-"))
-                te = (Double.parseDouble(s0) - Double.parseDouble(s2));
-            else if (s1.equals("/"))
-                te = (Double.parseDouble(s0) / Double.parseDouble(s2));
-            else
-                te = (Double.parseDouble(s0) * Double.parseDouble(s2));
- 
-            
+          
             l.setText(s0 + s1 + s2 + "=" + te);
- 
-            
+          
             s0 = Double.toString(te);
  
             s1 = s2 = "";
@@ -167,33 +146,23 @@ class MoneyBreakerLogic extends JFrame implements ActionListener {
         else {
             
             if (s1.equals("") || s2.equals(""))
-                s1 = s;
-            
-            else {
-                double te;
- 
-                
-                if (s1.equals("+"))
-                    te = (Double.parseDouble(s0) + Double.parseDouble(s2));
-                else if (s1.equals("-"))
-                    te = (Double.parseDouble(s0) - Double.parseDouble(s2));
-                else if (s1.equals("/"))
-                    te = (Double.parseDouble(s0) / Double.parseDouble(s2));
-                else
-                    te = (Double.parseDouble(s0) * Double.parseDouble(s2));
- 
-                
-                s0 = Double.toString(te);
- 
-                
-                s1 = s;
- 
-                
-                s2 = "";
+                s1 = s;            
+            else {              
             }
- 
-            
             l.setText(s0 + s1 + s2);
         }
     }
+    public void xyz(int eingabe){
+        int moneyList[] = new int[]{200,100,50,20,10,5,2,1};
+        String result = "";
+        for (int money:moneyList){
+            int j = eingabe/money;
+            for(int i=0; i<j;i++)
+                result += money+ "€+";
+            eingabe%=money; 
+            if (eingabe==0) break;
+        }
+        System.out.println(result.substring(0,result.length()-1));
+
+    }   
 }
